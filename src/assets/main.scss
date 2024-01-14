@@ -1,0 +1,72 @@
+@import url(./font.scss);
+@import url(./base.scss);
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  // height: 3px;
+  height: 0;
+}
+::-webkit-scrollbar-button {
+  height: 0;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #E0E2E7;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(#fff, .12);
+}
+
+body {
+  background: linear-gradient(111deg, #6934DD 0%, #FF0431 110.32%);
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  border-radius: 8px;
+  background-color: #6934DD;
+  color: #fff;
+  display: inline-flex;
+  padding: 15px 25px;
+  font-size: 20px;
+  cursor: pointer;
+  justify-content: center;
+  &:hover {
+    background-color: darken(#6934DD, 10%);
+  }
+  &.disabled {
+    background: #F2F4F7;
+    color: #786481;
+    cursor: default;
+  }
+  img {
+    margin: 0 10px;
+  }
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid #C4C4C4;
+  background: #F7F7F9;
+  color: rgba(0, 0, 0, 0.80);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  padding: 15px 20px;
+}
