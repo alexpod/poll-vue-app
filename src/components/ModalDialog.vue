@@ -14,6 +14,7 @@ const submitButton = () => {
     mainStore.currentStep = mainStore.currentStep + 1 
   } else {
     mainStore.pollStatus = false
+    mainStore.currentStep = mainStore.currentStep + 1 
   }
 }
 
@@ -85,6 +86,10 @@ const submitButton = () => {
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10), 0px 1px 10px 0px rgba(0, 0, 0, 0.05);
     border-radius: 12px;
     overflow: hidden;
+    @media (max-width: 1480px) {
+      height: 100vh;
+      border-radius: 0;
+    }
   }
   &__heading {
     height: 105px;
@@ -93,6 +98,12 @@ const submitButton = () => {
     font-weight: 700;
     line-height: 32px;
     padding: 50px;
+    @media (max-width: 1480px) {
+      padding: 44px 20px 10px;
+      line-height: 24px;
+      font-size: 18px;
+      height: auto;
+    }
   }
   &__body {
     font-size: 18px;
@@ -103,7 +114,13 @@ const submitButton = () => {
     margin: 0 10px 30px 17px;
     height: calc(100% - 235px);
     overflow: auto;
-    ::v-deep {
+    @media (max-width: 1480px) {
+      margin: 0 7px 30px 0;
+      padding: 0 13px 0 20px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    :v-deep {
       font-family: 'Inter', sans-serif;
       a {
         font-weight: 500;
@@ -178,7 +195,12 @@ const submitButton = () => {
     justify-content: flex-end;
     align-items: center;
     gap: 24px;
-    background: var(--Secondary-Gray-1, #F7F7F9);
+    background: #F7F7F9;
+    @media (max-width: 1480px) {
+      background-color: transparent;
+      justify-content: baseline;
+      padding: 16px 20px;
+    }
   }
 
 }

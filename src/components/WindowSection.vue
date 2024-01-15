@@ -1,8 +1,12 @@
 <script setup>
+import { useMainStore } from '@/stores/index.js'
+const mainStore = useMainStore()
 </script>
 
 <template lang="pug">
-.window
+.window(
+  :class="`window__step-${mainStore.currentStep}`"
+)
   .window__header
     .window__header-dots
   .window__content
@@ -14,9 +18,20 @@
   background-color: #fff;
   border-radius: 20px;
   width: 1449px;
-  min-height: 880px;
-  @media (max-width: 576px) {
+  overflow: hidden;
+  @media (min-width: 1481px) {
+    min-height: 880px;
+  }
+  @media (max-width: 1480px) {
     border-radius: 0;
+    width: 100%;
+    min-height: auto;
+    max-width: 600px;
+  }
+  &__step-4 {
+    @media (min-width: 1481px) {
+      min-height: 1100px
+    }
   }
   &__header {
     height: 39px;
@@ -25,7 +40,7 @@
     border-top-right-radius: 20px;
     display: flex;
     align-items: center;
-    @media (max-width: 576px) {
+    @media (max-width: 1480px) {
       display: none;
     }
     &-dots {
@@ -60,7 +75,7 @@
     padding: 40px 40px 50px 100px;
     position: relative;
     color: #000;
-    @media (max-width: 576px) {
+    @media (max-width: 1480px) {
       padding: 20px;
     }
   }

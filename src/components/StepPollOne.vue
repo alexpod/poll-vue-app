@@ -37,17 +37,19 @@ const validateForm = () => {
         item.status = 'disabled correct'
         mainStore.resultAnswers = mainStore.resultAnswers + 1
         message =  {
-          title: "Абсолютно",
-          description: `Мы провели опрос среди соискателей на тему того, что им интересно 
-            узнать о потенциальном работодателе. Мы советуем опираться на эти данные при 
-            написании описания компании. А если вы испытываете трудности <strong>читать еще</strong>`
+          title: "Абсолютно верно!",
+          description: `Умный поиск hh.ru устроен таким образом, чтобы кандидату 
+            выдавались в первую очередь наиболее релевантные для него вакансии. 
+            Алгоритм фактически понимает смысл написанного в резюме и вакансии 
+            <strong>читать еще</strong>`
         }
       } else if (props.content.answer != mainStore.currentAnswer.id) {
         message =  {
           title: "Неверно",
-          description: `Мы провели опрос среди соискателей на тему того, что им интересно 
-            узнать о потенциальном работодателе. Мы советуем опираться на эти данные при 
-            написании описания компании. А если вы испытываете трудности <strong>читать еще</strong>`
+          description: `Статистика брендированных шаблонов вакансии показывает 
+            портрет кандидатов, заходящих на страницу вашей вакансии, и источники 
+            Тут будет 3 строки Тут будет 3 строкиТут будет 3 строкиТут будет 3 
+            строки <strong>читать еще</strong>`
         }
         item.status = 'disabled incorrect'
       } else {
@@ -67,15 +69,12 @@ onMounted(() => {
 .poll__wrapper
   .poll__image
     img(
-      src="/images/step-2.svg"
+      src="/images/step-1.svg"
       alt=""
     )
   .poll(
     v-if="props.content.id === mainStore.currentStep && mainStore.pollStatus"
   )
-    .poll__subtitle(
-      v-if="props.content.subtitle"
-    ) {{ props.content.subtitle }}
     .poll__question {{ props.content.question }}
     .poll__answers
       .poll__option(
@@ -107,12 +106,13 @@ onMounted(() => {
   &__image {
     @media (min-width: 1481px) {
       position: absolute;
-      top: 200px;
-      right: -100px;
+      bottom: auto;
+      right: 67px;
+      top: 56px;
     }
     img {
       @media (max-width: 1480px) {
-        max-width: 172px;
+        max-width: 210px;
       }
     }
   }

@@ -78,40 +78,58 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.poll(
-  v-if="props.content.id === 3 && mainStore.pollStatus"
-)
-  .poll__subtitle(
-    v-if="props.content.subtitle"
-  ) {{ props.content.subtitle }}
-  .poll__question {{ props.content.question }}
-  .poll__answers
-    .poll__option(
-      v-for="(item, index) in props.content.options"
-      :key="item.id"
-      :class="[{'active': item.active}, item.status]"
-      @click="selectOption(item, index)"
+.poll__wrapper
+  .poll__image
+    img(
+      src="/images/step-3.svg"
+      alt=""
     )
-      span {{ item.value }}
+  .poll(
+    v-if="props.content.id === 3 && mainStore.pollStatus"
+  )
+    .poll__subtitle(
+      v-if="props.content.subtitle"
+    ) {{ props.content.subtitle }}
+    .poll__question {{ props.content.question }}
+    .poll__answers
+      .poll__option(
+        v-for="(item, index) in props.content.options"
+        :key="item.id"
+        :class="[{'active': item.active}, item.status]"
+        @click="selectOption(item, index)"
+      )
+        span {{ item.value }}
+        .poll__message(
+          v-if="message.title && item.id === mainStore.currentAnswer.id"
+        )
       .poll__message(
-        v-if="message.title && item.id === mainStore.currentAnswer.id"
+        v-if="message && message.title"
+        :class="message.status"
       )
-    .poll__message(
-      v-if="message && message.title"
-      :class="message.status"
-    )
-      .poll__message-title {{ message.title }}
-      .poll__message-description(
-        v-html="message.description"
-      )
-    .button.poll__button(
-      :class="{'disabled': mainStore.currentAnswer.length === 0}"
-      @click="submitButton"
-    ) Продолжить
+        .poll__message-title {{ message.title }}
+        .poll__message-description(
+          v-html="message.description"
+        )
+      .button.poll__button(
+        :class="{'disabled': mainStore.currentAnswer.length === 0}"
+        @click="submitButton"
+      ) Продолжить
 </template>
 
 <style lang="scss" scoped>
 .poll {
+  &__image {
+    @media (min-width: 1481px) {
+      position: absolute;
+      right: 40px;
+      top: 300px;
+    }
+    img {
+      @media (max-width: 1480px) {
+        max-width: 272px;
+      }
+    }
+  }
   &__message {
     padding: 20px;
     &-description {
@@ -149,6 +167,7 @@ onMounted(() => {
         background: transparent url('/images/icon-check.svg') center center no-repeat;
       }
       &.correct {
+        font-size: 14px;
         &::before {
           background-color: #37B94A;
         }
@@ -157,6 +176,7 @@ onMounted(() => {
         }
       }
       &.incorrect {
+        font-size: 14px;
         &::before {
           background-color: #F32D2D;
         }

@@ -21,7 +21,15 @@ const mainStore = useMainStore()
   gap: 20px;
   position: absolute;
   right: 20px;
-  top: 58px;
+  top: 20px;
+  @media (max-width: 1480px) {
+    flex-direction: row-reverse;
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    gap: 0;
+  }
   &__age {
     color: #9CA1AD;
     font-size: 14px;
@@ -34,6 +42,44 @@ const mainStore = useMainStore()
     align-items: center;
     border-radius: 100px;
     border: 1px solid #E0E2E7;
+  }
+}
+.steps {
+  color: #6C12ED;
+  display: inline-flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 10px;
+  background: #F7F7F9;
+  @media (max-width: 1480px) {
+    background: none;
+    padding: 8px 0 0;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 40px;
+  }
+  &__value {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  &__progress {
+    border-radius: 10px;
+    overflow: hidden;
+    height: 2px;
+    background-color: #E0E2E7;
+    width: 100%;
+    @media (max-width: 1480px) {
+      display: none;
+    }
+    &-bar {
+      width: 33%;
+      background-color: #6C12ED;
+      height: 2px;
+    }
   }
 }
 </style>

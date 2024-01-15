@@ -1,5 +1,4 @@
 @import url(./font.scss);
-@import url(./base.scss);
 
 * {
   font-family: 'Inter', sans-serif;
@@ -26,6 +25,9 @@ body {
   background: linear-gradient(111deg, #6934DD 0%, #FF0431 110.32%);
   padding: 0;
   margin: 0;
+  @media (max-width: 1480px) {
+    background: #fff;
+  }
 }
 
 #app {
@@ -33,7 +35,9 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  @media (min-width: 1481px) {
+    align-items: center;
+  }
 }
 
 .button {
@@ -45,6 +49,10 @@ body {
   font-size: 20px;
   cursor: pointer;
   justify-content: center;
+  @media (max-width: 1480px) {
+    display: flex;
+    width: 100%;
+  }
   &:hover {
     background-color: darken(#6934DD, 10%);
   }
@@ -57,7 +65,10 @@ body {
     margin: 0 10px;
   }
 }
-
+a {
+  color: #6941C6;
+  font-weight: 500;
+}
 input {
   border-radius: 8px;
   border: 1px solid #C4C4C4;
