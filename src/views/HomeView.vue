@@ -42,6 +42,7 @@ WindowSection
   StepFinally(
     v-if="!mainStore.pollStatus"
   )
+
 .background-element
   img(src="/images/bg-element-1.svg" alt="")
   img(src="/images/bg-element-2.svg" alt="")

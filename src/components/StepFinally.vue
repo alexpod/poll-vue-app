@@ -1,6 +1,30 @@
 <script setup>
+import { ref } from 'vue'
 import { useMainStore } from '@/stores/index.js'
-const mainStore = useMainStore();
+const mainStore = useMainStore()
+
+const name = defineModel('name')
+const email = defineModel('title')
+const formSuccess = ref(false)
+const formError = ref(false)
+
+
+const checkForm = () => {
+  formError.value = false
+  if (name.value && email.value) return formSuccess.value = true;
+  formError.value = true
+}
+
+const resetForm = () => {
+  mainStore.currentStep = 1
+  mainStore.resultAnswers = 0
+  mainStore.pollStatus = true
+}
+
+const restartPoll = () => {
+  mainStore.getPolls()
+  setTimeout(resetForm, 500)
+}
 
 </script>
 
@@ -19,13 +43,24 @@ const mainStore = useMainStore();
     p 
       strong Чтобы помочь избежать подобной ситуации с вашей реальной вакансией, мы подготовили руководство по работе. Заполните форму и получите наши рекомендации:
     form(
-      @click.prevent=""
+      v-if="!formSuccess"
+      @submit.prevent="checkForm"
     )
-      input(type="text" placeholder="Ваше имя")
-      input(type="email" placeholder="Электронная почта (рабочая)")
+      input(type="text" v-model="name" placeholder="Ваше имя")
+      input(type="text" v-model="email" placeholder="Электронная почта (рабочая)")
+      p.message__error(
+        v-if="formError"
+      ) Заполните все поля
       button.button(
         type="submit"
       ) Скачать <img src="/images/download.svg" alt="download" />
+    .form__success(
+      v-if="formSuccess"
+    )
+      p.message__success <strong>Форма отправлена</strong> скоро начнется загрузка файла
+      .button(
+        @click="restartPoll"
+      ) Пройти опрос повторно
 </template>
 
 <style lang="scss" scoped>
@@ -120,6 +155,25 @@ form {
   button {
     width: 100%;
     display: flex;
+  }
+}
+.message {
+  &__success {
+    color: #249F5D;
+    font-size: 18px;
+    line-height: 24px;
+    background: #E8F3C9;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  &__error {
+    width: 100%;
+    font-size: 18px;
+    line-height: 24px;
+    color: #F32D2D;
+    background: #FFDBDB;
+    padding: 20px;
+    border-radius: 8px;
   }
 }
 </style>

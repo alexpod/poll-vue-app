@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const url = "https://b5f7782b0525ab13.mokky.dev";
+const url = "https://65a56ece52f07a8b4a3f19aa.mockapi.io/";
 
 export const useMainStore = defineStore('mainStore', () => {
   
