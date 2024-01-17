@@ -7,6 +7,8 @@ const props = defineProps({
   content: Object
 })
 
+let draggableItem = ref(null)
+const dropItems = ref(props.content.options)
 let message = reactive({})
 
 const answerValidated = ref(false)
@@ -25,41 +27,65 @@ const selectOption = (item, index) => {
   }
 }
 
+const startDrag = (index) => {
+  if(!answerValidated.value) draggableItem.value = index
+}
+
+const onDrop = (index) => {
+  if(!answerValidated.value) {
+    const itemId = dropItems.value.splice(draggableItem.value, 1)[0]
+    dropItems.value.splice(index, 0, itemId)
+    draggableItem.value = null
+  }
+}
+
+const getOptionId = () => {
+  return dropItems.value.map(item => item.id)
+}
+
 const submitButton = () => {
   if (answerValidated.value) return mainStore.modal = true
   validateForm()
 }
 
 const validateForm = () => {
-  if (mainStore.currentAnswer.value) {
-    props.content.options.map(item => {
-      if (item.id === mainStore.currentAnswer.id && item.id === props.content.answer) {
-        item.status = 'disabled correct'
-        mainStore.resultAnswers = mainStore.resultAnswers + 1
-        message =  {
-          title: "Абсолютно",
-          description: `Мы провели опрос среди соискателей на тему того, что им интересно 
-            узнать о потенциальном работодателе. Мы советуем опираться на эти данные при 
-            написании описания компании. А если вы испытываете трудности <strong>читать еще</strong>`
-        }
-      } else if (props.content.answer != mainStore.currentAnswer.id) {
-        message =  {
-          title: "Неверно",
-          description: `Мы провели опрос среди соискателей на тему того, что им интересно 
-            узнать о потенциальном работодателе. Мы советуем опираться на эти данные при 
-            написании описания компании. А если вы испытываете трудности <strong>читать еще</strong>`
-        }
-        item.status = 'disabled incorrect'
-      } else {
-        item.status = 'disabled incorrect'
-      }
-    })
-    answerValidated.value = true
+
+  props.content.options.map((item, index) => {
+    if(item.id === mainStore.currentAnswer[index]) {
+      item.status = 'disabled correct'
+      
+    } else {
+      item.status = 'disabled incorrect'
+    }
+  })
+
+  answerValidated.value = true
+
+  if(getOptionId().toString() === mainStore.currentAnswer.toString()) {
+    mainStore.resultAnswers += 1
+    localStorage.setItem('steps', mainStore.currentStep);
+    localStorage.setItem('result', mainStore.resultAnswers);
+    message =  {
+      title: "Абсолютно",
+      description: `Мы провели опрос среди соискателей на тему того, что им интересно 
+        узнать о потенциальном работодателе. Мы советуем опираться на эти данные при 
+        написании описания компании. А если вы испытываете трудности <strong>читать еще</strong>`,
+      status: 'correct'
+    }
+  } else {
+    message =  {
+      title: "Неверно",
+      description: `Мы провели опрос среди соискателей на тему того, что им интересно 
+        узнать о потенциальном работодателе. Мы советуем опираться на эти данные при 
+        написании описания компании. А если вы испытываете трудности <strong>читать еще</strong>`,
+      status: 'incorrect'
+    }
   }
 }
 
 onMounted(() => {
   optionChosen
+  mainStore.currentAnswer = [1,2,3,4]
 });
 </script>
 
@@ -78,26 +104,28 @@ onMounted(() => {
     ) {{ props.content.subtitle }}
     .poll__question {{ props.content.question }}
     .poll__answers
-      .poll__option(
-        v-for="(item, index) in props.content.options"
+      .poll__option.active(
+        v-for="(item, index) in dropItems"
         :key="item.id"
         :class="[{'active': item.active}, item.status]"
-        @click="selectOption(item, index)"
+        draggable="true"
+        @dragstart="startDrag(index)"
+        @drop="onDrop(index)"
+        @dragenter.prevent
+        @dragover.prevent
       )
+        span.poll__index {{ index + 1}}
         span {{ item.value }}
-        .poll__message(
-          v-if="message.title && item.id === mainStore.currentAnswer.id"
+        span.poll__arrow
+      .poll__message(
+        v-if="message && message.title"
+        :class="message.status"
+      )
+        .poll__message-title {{ message.title }}
+        .poll__message-description(
+          v-html="message.description"
         )
-          .poll__message-title(
-            v-if="message.title && item.id === mainStore.currentAnswer.id"
-          ) {{ message.title }}
-          .poll__message-description(
-            v-if="message.description && item.id === mainStore.currentAnswer.id"
-            v-html="message.description"
-          )
-
       .button.poll__button(
-        :class="{'disabled': mainStore.currentAnswer.length === 0}"
         @click="submitButton"
       ) Продолжить
 </template>
@@ -115,6 +143,97 @@ onMounted(() => {
         max-width: 172px;
       }
     }
+  }
+  &__message {
+    padding: 20px;
+    &-description {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 21px;
+    }
+    &.correct {
+      border-radius: 8px;
+      background: #E8F3C9;
+      .poll__message-title {
+        color: #249F5D;
+        margin-bottom: 5px;
+      }
+    }
+    &.incorrect {
+      border-radius: 8px;
+      background: #FFDBDB;
+      .poll__message-title {
+        color: #F32D2D;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  &__option {
+    &:active,
+    &:focus,
+    &:hover {
+      background-color: #7435e225;
+    }
+    &::before {
+      display: none;
+    }
+    &::after {
+      display: none;
+    }
+    &.active {
+      &::after {
+        display: none;
+      }
+      &.incorrect {
+        color: #F32D2D;
+        background: #FFDBDB;
+        &::after {
+          display: none;
+        }
+        .poll__index {
+          background: #F32D2D;
+        }
+      }
+      &.correct {
+        color: #249F5D;
+        font-size: 18px;
+        line-height: 24px;
+        background: #E8F3C9;
+        &::after {
+          display: none;
+        }
+        .poll__index {
+          background: #249F5D;
+        }
+      }
+    }
+  }
+  &__arrow {
+    content: "";
+    width: 28px;
+    height: 28px;
+    background: url('/images/icon-drop.svg') 0 0 no-repeat;
+    position: absolute;
+    right: 20px;
+  }
+  &__index {
+    background-color: #7435E2;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px; 
+    
   }
 }
 </style>

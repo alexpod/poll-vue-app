@@ -19,6 +19,7 @@ const mainStore = useMainStore()
   border-radius: 20px;
   width: 1449px;
   overflow: hidden;
+  z-index: 10;
   @media (min-width: 1481px) {
     min-height: 880px;
   }

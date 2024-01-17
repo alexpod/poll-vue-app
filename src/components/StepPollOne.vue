@@ -56,6 +56,8 @@ const validateForm = () => {
         item.status = 'disabled incorrect'
       }
     })
+    localStorage.setItem('steps', mainStore.currentStep);
+    localStorage.setItem('result', mainStore.resultAnswers);
     answerValidated.value = true
   }
 }
