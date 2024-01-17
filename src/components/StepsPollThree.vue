@@ -45,6 +45,9 @@ const validateForm = () => {
     let countNumber = mainStore.currentAnswer.filter((item) => item.status === 'disabled correct').length
     if (countNumber === 3) {
       mainStore.resultAnswers += 1
+      localStorage.setItem('result', mainStore.resultAnswers)
+      localStorage.setItem('steps', mainStore.currentStep)
+      localStorage.setItem('status', 1)
       return message = {
         title: 'Бинго!',
         description: `Аналитика по этап подбора – это сервис, позволяющий узнать эффективность 
@@ -53,6 +56,8 @@ const validateForm = () => {
         status: 'correct'
       }
     } else if (countNumber > 0) {
+      localStorage.setItem('steps', mainStore.currentStep)
+      localStorage.setItem('status', 1)
       return message = {
         title: 'Не совсем верно...',
         description: `Аналитика по этап подбора – это сервис, позволяющий узнать эффективность 
@@ -61,6 +66,8 @@ const validateForm = () => {
         status: 'incorrect'
       }
     } else {
+      localStorage.setItem('steps', mainStore.currentStep)
+      localStorage.setItem('status', 1)
       return message = {
         title: 'К сожалению, неверно',
         description: `Аналитика по этап подбора – это сервис, позволяющий узнать эффективность 

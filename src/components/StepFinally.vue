@@ -19,6 +19,7 @@ const resetForm = () => {
   mainStore.currentStep = 1
   mainStore.resultAnswers = 0
   mainStore.pollStatus = true
+  localStorage.clear()
 }
 
 const restartPoll = () => {
