@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import { useMainStore } from '@/stores/index.js'
-const mainStore = useMainStore();
+const mainStore = useMainStore()
 
 const props = defineProps({
   content: {
@@ -13,14 +13,14 @@ const props = defineProps({
 let message = reactive({})
 
 const answerValidated = ref(false)
-let itemsRef = [];
+let itemsRef = []
 const optionChosen = (element) => {
   if (element) {
-    itemsRef.push(element);
+    itemsRef.push(element)
   }
-};
+}
 
-const selectOption = (item, index) => {
+const selectOption = (item) => {
   if (!answerValidated.value) {
     props.content.options.map(item => item.active = false)
     item.active = !item.active
@@ -59,8 +59,8 @@ const validateForm = () => {
         item.status = 'disabled incorrect'
       }
     })
-    localStorage.setItem('steps', mainStore.currentStep);
-    localStorage.setItem('result', mainStore.resultAnswers);
+    localStorage.setItem('steps', mainStore.currentStep)
+    localStorage.setItem('result', mainStore.resultAnswers)
     answerValidated.value = true
   }
 }
@@ -68,7 +68,7 @@ const validateForm = () => {
 onMounted(() => {
   mainStore.getPolls()
   optionChosen
-});
+})
 </script>
 
 <template lang="pug">

@@ -13,9 +13,19 @@ import { useMainStore } from '@/stores/index.js'
 const mainStore = useMainStore()
 
 onMounted(() => {
-  // mainStore.getPolls()
-  // mainStore.getPolls()
-});
+  mainStore.getPolls()
+  if (localStorage.getItem('steps')) {
+    const steps = localStorage.getItem('steps')
+    const status = localStorage.getItem('status')
+    const result = localStorage.getItem('result')
+    
+    mainStore.resultAnswers = parseInt(result)    
+    mainStore.currentStep = parseInt(steps) + 1
+    console.log(mainStore.currentStep, mainStore.resultAnswers)
+    if (status) mainStore.pollStatus = false
+  }
+  
+})
 </script>
 
 <template lang="pug">
@@ -27,7 +37,6 @@ WindowSection
   WindowPanelInfo(
     v-if="mainStore.pollStatus"
   )
-
   StepPollOne(
     v-if="mainStore.currentStep === 1"
     :content="mainStore.getStepContent()"

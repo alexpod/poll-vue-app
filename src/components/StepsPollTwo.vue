@@ -1,23 +1,28 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import { useMainStore } from '@/stores/index.js'
-const mainStore = useMainStore();
+const mainStore = useMainStore()
 
 const props = defineProps({
-  content: Object
+  content: {
+    required: true,
+    default: () => {},
+  }
 })
 
 let draggableItem = ref(null)
-const dropItems = ref(props.content.options)
+const dropItems = ref()
 let message = reactive({})
 
+
+
 const answerValidated = ref(false)
-let itemsRef = [];
+let itemsRef = []
 const optionChosen = (element) => {
   if (element) {
-    itemsRef.push(element);
+    itemsRef.push(element)
   }
-};
+}
 
 const selectOption = (item, index) => {
   if (!answerValidated.value) {
@@ -33,14 +38,16 @@ const startDrag = (index) => {
 
 const onDrop = (index) => {
   if(!answerValidated.value) {
-    const itemId = dropItems.value.splice(draggableItem.value, 1)[0]
-    dropItems.value.splice(index, 0, itemId)
+    const dropItemsAr = props.content.options
+    const itemId = dropItemsAr.splice(draggableItem.value, 1)[0]
+    dropItemsAr.splice(index, 0, itemId)
     draggableItem.value = null
   }
 }
 
 const getOptionId = () => {
-  return dropItems.value.map(item => item.id)
+  const dropItemsAr = props.content.options
+  return dropItemsAr.map(item => item.id)
 }
 
 const submitButton = () => {
@@ -63,8 +70,8 @@ const validateForm = () => {
 
   if(getOptionId().toString() === mainStore.currentAnswer.toString()) {
     mainStore.resultAnswers += 1
-    localStorage.setItem('steps', mainStore.currentStep);
-    localStorage.setItem('result', mainStore.resultAnswers);
+    localStorage.setItem('steps', mainStore.currentStep)
+    localStorage.setItem('result', mainStore.resultAnswers)
     message =  {
       title: "Абсолютно",
       description: `Мы провели опрос среди соискателей на тему того, что им интересно 
@@ -84,9 +91,11 @@ const validateForm = () => {
 }
 
 onMounted(() => {
+  mainStore.getPolls()
   optionChosen
   mainStore.currentAnswer = [1,2,3,4]
-});
+  // dropItems.value = props.content.options
+})
 </script>
 
 <template lang="pug">
@@ -97,7 +106,7 @@ onMounted(() => {
       alt=""
     )
   .poll(
-    v-if="props.content.id === mainStore.currentStep && mainStore.pollStatus"
+    v-if="props.content"
   )
     .poll__subtitle(
       v-if="props.content.subtitle"
@@ -105,7 +114,7 @@ onMounted(() => {
     .poll__question {{ props.content.question }}
     .poll__answers
       .poll__option.active(
-        v-for="(item, index) in dropItems"
+        v-for="(item, index) in props.content.options"
         :key="item.id"
         :class="[{'active': item.active}, item.status]"
         draggable="true"

@@ -18,10 +18,12 @@ export const useMainStore = defineStore('mainStore', () => {
 
   const getPolls = async () => {
     try {
+      loader.value = true
       const { data } = await axios.get(`${url}/polls`)
       polls.value = data
+      loader.value = false
     } catch (err) {
-      console.log("Error: ", err);
+      console.log("Error: ", err)
     }
   }
 
@@ -35,10 +37,6 @@ export const useMainStore = defineStore('mainStore', () => {
   const getProgressBarWidth = () => {
     return currentStep.value  / endStep.value * 100
   }
-
-  /* const getPollStep = () => {
-    polls.value.
-  } */
 
   return {
     getPolls,
