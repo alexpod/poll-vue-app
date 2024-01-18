@@ -11,7 +11,7 @@ const formError = ref(false)
 
 const checkForm = () => {
   formError.value = false
-  if (name.value && email.value) return formSuccess.value = true;
+  if (name.value && email.value) return formSuccess.value = true
   formError.value = true
 }
 
@@ -23,7 +23,7 @@ const resetForm = () => {
 }
 
 const restartPoll = () => {
-  mainStore.getPolls()
+  // mainStore.getPolls()
   setTimeout(resetForm, 500)
 }
 

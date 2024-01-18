@@ -1,21 +1,24 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import { useMainStore } from '@/stores/index.js'
-const mainStore = useMainStore();
+const mainStore = useMainStore()
 
 const props = defineProps({
-  content: Object
+  content: {
+    required: true,
+    default: () => {},
+  }
 })
 
 let message = reactive([])
 const answerValidated = ref(false)
-let itemsRef = [];
+let itemsRef = []
 
 const optionChosen = (element) => {
   if (element) {
-    itemsRef.push(element);
+    itemsRef.push(element)
   }
-};
+}
 
 const selectOption = (item) => {
   if (!answerValidated.value) {
@@ -80,8 +83,10 @@ const validateForm = () => {
 }
 
 onMounted(() => {
+  
+  mainStore.getPolls()
   optionChosen
-});
+})
 </script>
 
 <template lang="pug">
@@ -92,7 +97,7 @@ onMounted(() => {
       alt=""
     )
   .poll(
-    v-if="props.content.id === 3 && mainStore.pollStatus"
+    v-if="props.content"
   )
     .poll__subtitle(
       v-if="props.content.subtitle"

@@ -14,7 +14,6 @@ const mainStore = useMainStore()
 
 onMounted(() => {
   mainStore.getPolls()
-  mainStore.getModal()
   if (localStorage.getItem('steps')) {
     const steps = localStorage.getItem('steps')
     const status = localStorage.getItem('status')
@@ -22,10 +21,11 @@ onMounted(() => {
     
     mainStore.resultAnswers = parseInt(result)    
     mainStore.currentStep = parseInt(steps) + 1
-
+    console.log(mainStore.currentStep, mainStore.resultAnswers)
     if (status) mainStore.pollStatus = false
   }
-});
+  
+})
 </script>
 
 <template lang="pug">
@@ -39,15 +39,15 @@ WindowSection
   )
   StepPollOne(
     v-if="mainStore.currentStep === 1"
-    :content="mainStore.polls[mainStore.currentStep - 1]"
+    :content="mainStore.getStepContent()"
   )
   StepsPollTwo(
     v-if="mainStore.currentStep === 2"
-    :content="mainStore.polls[mainStore.currentStep - 1]"
+    :content="mainStore.getStepContent()"
   )
   StepsPollThree(
     v-if="mainStore.currentStep === 3"
-    :content="mainStore.polls[mainStore.currentStep - 1]"
+    :content="mainStore.getStepContent()"
   )
   StepFinally(
     v-if="!mainStore.pollStatus"
