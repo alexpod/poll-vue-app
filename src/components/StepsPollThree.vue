@@ -43,7 +43,7 @@ const validateForm = () => {
     
     answerValidated.value = true
     let countNumber = mainStore.currentAnswer.filter((item) => item.status === 'disabled correct').length
-    if (countNumber === 3) {
+    if (countNumber === 3 && mainStore.currentAnswer.length === 3) {
       mainStore.resultAnswers += 1
       localStorage.setItem('result', mainStore.resultAnswers)
       localStorage.setItem('steps', mainStore.currentStep)
