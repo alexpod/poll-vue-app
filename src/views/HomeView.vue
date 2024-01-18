@@ -13,18 +13,8 @@ import { useMainStore } from '@/stores/index.js'
 const mainStore = useMainStore()
 
 onMounted(() => {
-  mainStore.getPolls()
-  mainStore.getModal()
-  if (localStorage.getItem('steps')) {
-    const steps = localStorage.getItem('steps')
-    const status = localStorage.getItem('status')
-    const result = localStorage.getItem('result')
-    
-    mainStore.resultAnswers = parseInt(result)    
-    mainStore.currentStep = parseInt(steps) + 1
-
-    if (status) mainStore.pollStatus = false
-  }
+  // mainStore.getPolls()
+  // mainStore.getPolls()
 });
 </script>
 
@@ -37,17 +27,18 @@ WindowSection
   WindowPanelInfo(
     v-if="mainStore.pollStatus"
   )
+
   StepPollOne(
     v-if="mainStore.currentStep === 1"
-    :content="mainStore.polls[mainStore.currentStep - 1]"
+    :content="mainStore.getStepContent()"
   )
   StepsPollTwo(
     v-if="mainStore.currentStep === 2"
-    :content="mainStore.polls[mainStore.currentStep - 1]"
+    :content="mainStore.getStepContent()"
   )
   StepsPollThree(
     v-if="mainStore.currentStep === 3"
-    :content="mainStore.polls[mainStore.currentStep - 1]"
+    :content="mainStore.getStepContent()"
   )
   StepFinally(
     v-if="!mainStore.pollStatus"

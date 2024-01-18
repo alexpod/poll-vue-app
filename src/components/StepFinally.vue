@@ -23,7 +23,7 @@ const resetForm = () => {
 }
 
 const restartPoll = () => {
-  mainStore.getPolls()
+  // mainStore.getPolls()
   setTimeout(resetForm, 500)
 }
 

@@ -4,7 +4,10 @@ import { useMainStore } from '@/stores/index.js'
 const mainStore = useMainStore();
 
 const props = defineProps({
-  content: Object
+  content: {
+    required: true,
+    default: () => {},
+  }
 })
 
 let message = reactive({})
@@ -63,6 +66,7 @@ const validateForm = () => {
 }
 
 onMounted(() => {
+  mainStore.getPolls()
   optionChosen
 });
 </script>
@@ -75,7 +79,7 @@ onMounted(() => {
       alt=""
     )
   .poll(
-    v-if="props.content.id === mainStore.currentStep && mainStore.pollStatus"
+    v-if="props.content"
   )
     .poll__question {{ props.content.question }}
     .poll__answers
