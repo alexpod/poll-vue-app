@@ -7,9 +7,9 @@ import StepPollOne from '@/components/StepPollOne.vue'
 import StepsPollTwo from '@/components/StepsPollTwo.vue'
 import StepsPollThree from '@/components/StepsPollThree.vue'
 import StepFinally from '@/components/StepFinally.vue'
+import BackgroundElement from '@/components/BackgroundElement.vue'
 
 import { useMainStore } from '@/stores/index.js'
-import BackgroundElement from '@/components/BackgroundElement.vue'
 
 const mainStore = useMainStore()
 
