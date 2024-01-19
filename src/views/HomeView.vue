@@ -7,6 +7,7 @@ import StepPollOne from '@/components/StepPollOne.vue'
 import StepsPollTwo from '@/components/StepsPollTwo.vue'
 import StepsPollThree from '@/components/StepsPollThree.vue'
 import StepFinally from '@/components/StepFinally.vue'
+import BackgroundElement from '@/components/BackgroundElement.vue'
 
 import { useMainStore } from '@/stores/index.js'
 
@@ -52,13 +53,7 @@ WindowSection
   StepFinally(
     v-if="!mainStore.pollStatus"
   )
-
-.background-element
-  img(src="/images/bg-element-1.svg" alt="")
-  img(src="/images/bg-element-2.svg" alt="")
-  img(src="/images/bg-element-3.svg" alt="")
-  img(src="/images/bg-element-4.svg" alt="")
-  img(src="/images/bg-element-5.svg" alt="")
+BackgroundElement
 </template>
 
 <style lang="scss">
@@ -68,17 +63,9 @@ WindowSection
   @media (max-width: 1480px) {
     padding-top: 20px;
   }
-  &__wrapper {
-    @media (min-width: 1481px) {
-      //display: flex;
-      // flex-direction: row-reverse;
-    }
-  }
   &__image {
     @media (min-width: 1481px) {
       position: absolute;
-      /* bottom: -300px;
-      right: -100px; */
     }
 
     padding-top: 112px;
@@ -275,41 +262,6 @@ WindowSection
       margin-top: 66px;
       font-size: 18px;
     }
-  }
-}
-.background-element {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1px;
-  height: 1px;
-  @media (max-width: 1480px) {
-    display: none;
-  }
-  img:nth-child(1){
-    position: absolute;
-    left: -784px;
-    top: -328px;
-  }
-  img:nth-child(2){
-    position: absolute;
-    left: -826px;
-    top: 36px;
-  }
-  img:nth-child(3){
-    position: absolute;
-    right: -934px;
-    top: -206px;
-  }
-  img:nth-child(4){
-    position: absolute;
-    top: 359px;
-    right: -809px;
-  }
-  img:nth-child(5){
-    position: absolute;
-    top: 369px;
-    right: -859px;
   }
 }
 </style>
