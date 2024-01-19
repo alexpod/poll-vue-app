@@ -30,6 +30,7 @@ export const useMainStore = defineStore('mainStore', () => {
   const getModal = () => {
     return polls.value.find(index => index.id === (currentStep.value)).modal
   }
+  
   const getStepContent = () => {
     return polls.value.find(item => item.id === (currentStep.value))
   }

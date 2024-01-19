@@ -94,7 +94,6 @@ onMounted(() => {
   mainStore.getPolls()
   optionChosen
   mainStore.currentAnswer = [1,2,3,4]
-  // dropItems.value = props.content.options
 })
 </script>
 
@@ -225,6 +224,10 @@ onMounted(() => {
     background: url('/images/icon-drop.svg') 0 0 no-repeat;
     position: absolute;
     right: 20px;
+    @media (max-width: 1480px) {
+      background-size: 12px;
+      right: 10px;
+    }
   }
   &__index {
     background-color: #7435E2;
@@ -241,7 +244,12 @@ onMounted(() => {
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px; 
+    line-height: 28px;
+    @media (max-width: 1480px) {
+      top: 7px;
+      left: 7px;
+      font-size: 16px;
+    }
     
   }
 }
