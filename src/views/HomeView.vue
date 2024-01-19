@@ -54,12 +54,6 @@ WindowSection
     v-if="!mainStore.pollStatus"
   )
 BackgroundElement
-// .background-element
-  img(src="/images/bg-element-1.svg" alt="")
-  img(src="/images/bg-element-2.svg" alt="")
-  img(src="/images/bg-element-3.svg" alt="")
-  img(src="/images/bg-element-4.svg" alt="")
-  img(src="/images/bg-element-5.svg" alt="")
 </template>
 
 <style lang="scss">
